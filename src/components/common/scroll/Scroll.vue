@@ -16,6 +16,7 @@ export default {
         }
     },
     methods:{
+    // 解决 better-scroll2.0 带来的内容超过指定高度，但不滚动的问题
         refresh(){
             this.scroll.refresh();
         }
