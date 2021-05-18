@@ -3,21 +3,13 @@
       <navbar class="homeNav">
         <div slot="center">购物街</div>
       </navbar>
-      <div>
+      <scroll class="content" ref="scroll">
         <homeswiper :banners="banners"></homeswiper>
-      </div>
-      <div>
         <recommendView :recommend="recommend"></recommendView>
-      </div>
-      <div>
         <featureView></featureView>
-      </div>
-      <div class="tabControl">
-        <tabControl :titles="['流行','新款','精选']" @tabClick="tabClick"></tabControl>
-      </div>
-      <div>
+        <tabControl :titles="['流行','新款','精选']" @tabClick="tabClick" class="tabControl"></tabControl>
         <goodsList :goods="showType"></goodsList>
-      </div>
+      </scroll>
       
       <div>
         <ul>
@@ -128,6 +120,7 @@
 
 <script>
 import navbar from "components/common/navbar/NavBar"
+import scroll from "components/common/scroll/Scroll"
 import tabControl from "components/content/tabControl/TabControl"
 import goodsList from "components/content/goods/GoodsList"
 
@@ -159,16 +152,19 @@ export default {
     recommendView,
     featureView,
     tabControl,
-    goodsList
+    goodsList,
+    scroll
   },
   created(){
-    // 1. 请求多个数据
+    this.$nextTick(()=>{
+      // 1. 请求多个数据
     this.getHomeMultidata();
 
     // 2. 请求商品数据
     this.getHomeGoods("pop");
     this.getHomeGoods("new");
     this.getHomeGoods("sell");
+    })
   },
   computed:{
     showType(){
@@ -205,6 +201,10 @@ export default {
       this.dKeyword = res.data.dKeyword.list;
       this.Keywords = res.data.keywords.list;
       this.recommend = res.data.recommend.list;
+
+      this.$nextTick(()=>{
+        this.$refs.scroll.refresh();
+      })
       })
     },
     getHomeGoods(type){
@@ -213,6 +213,9 @@ export default {
         console.log(res);
         this.goods[type].list.push(...res.data.list);
         this.goods[type].page++;
+        this.$nextTick(()=>{
+        this.$refs.scroll.refresh();
+      })
       })
     }
   }
@@ -240,5 +243,10 @@ export default {
     position: sticky;
     top: 44px;
     z-index: 9;
+  }
+
+  .content{
+    height:300px;
+    overflow:hidden;
   }
 </style>
