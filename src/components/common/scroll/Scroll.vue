@@ -16,9 +16,7 @@ export default {
         }
     },
     methods:{
-        refresh(){
-            this.scroll.refresh();
-        }
+        
     },
     mounted(){
         this.scroll = new BScroll(this.$refs.wrapper,{

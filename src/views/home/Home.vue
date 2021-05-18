@@ -3,7 +3,7 @@
       <navbar class="homeNav">
         <div slot="center">购物街</div>
       </navbar>
-      <scroll class="content" ref="scroll">
+      <scroll class="content">
         <homeswiper :banners="banners"></homeswiper>
         <recommendView :recommend="recommend"></recommendView>
         <featureView></featureView>
@@ -156,7 +156,6 @@ export default {
     scroll
   },
   created(){
-    this.$nextTick(()=>{
       // 1. 请求多个数据
     this.getHomeMultidata();
 
@@ -164,7 +163,6 @@ export default {
     this.getHomeGoods("pop");
     this.getHomeGoods("new");
     this.getHomeGoods("sell");
-    })
   },
   computed:{
     showType(){
@@ -201,21 +199,16 @@ export default {
       this.dKeyword = res.data.dKeyword.list;
       this.Keywords = res.data.keywords.list;
       this.recommend = res.data.recommend.list;
-
-      this.$nextTick(()=>{
-        this.$refs.scroll.refresh();
-      })
       })
     },
+
     getHomeGoods(type){
       const page = this.goods[type].page+1;
       getHomeGoods(type,page).then(res=>{
         console.log(res);
         this.goods[type].list.push(...res.data.list);
         this.goods[type].page++;
-        this.$nextTick(()=>{
-        this.$refs.scroll.refresh();
-      })
+        
       })
     }
   }
