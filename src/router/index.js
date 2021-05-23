@@ -5,6 +5,7 @@ const home = ()=>import("views/home/Home");
 const category = ()=>import ("views/category/Category");
 const shopcart = ()=>import("views/shopcart/ShopCart");
 const profile = ()=>import("views/profile/Profile");
+const detail = ()=>import("views/detail/Detail");
 
 Vue.use(Router)
 
@@ -29,6 +30,10 @@ export default new Router({
       {
           path:"/profile",
           component:profile
+      },
+      {
+          path:"/detail/:iid",
+          component:detail
       }
   ],
   mode:"history"

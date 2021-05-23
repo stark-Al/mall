@@ -117,7 +117,6 @@ export default {
     }
   },
   mounted(){
-    console.log(document.querySelector(".wrapper"));
     this.scroll = new BScroll(document.querySelector(".wrapper"))
   }
 }
